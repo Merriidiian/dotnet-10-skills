@@ -26,4 +26,4 @@ public void AddStage(PageStage stage)
 }
 ```
 
-Group the checks for a business action inside its named operation. For example, answering an invitation checks the current status and applies the answer together. Extract a separate policy when several operations genuinely share the decision.
+Group the checks for a business action inside its named operation. In the example above, the aggregate enforces stage uniqueness before changing its collection. Extract a separate policy when several operations genuinely share the decision.

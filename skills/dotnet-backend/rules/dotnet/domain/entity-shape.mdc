@@ -14,8 +14,8 @@ Expose named operations for state changes. Validate the complete candidate state
 Copy an incoming mutable collection before retaining it. Keep entity collections in a private list and expose a read-only view.
 For EF-mapped primitive ID lists, follow the collection mapping already used by the service.
 
-Model editable business fields and any required submission snapshot with named domain types. Keep serialization in the transport or persistence mapping so the aggregate can validate its data directly.
+Model business state with named domain types. Keep serialization in the transport or persistence mapping so the aggregate can validate its data directly.
 
 When the persistence layer generates the primary key, let it assign the ID. Omit manual `Id = Guid.NewGuid()` assignments for such keys. With an EF client-side key generator, track the new principal before using its ID in dependent records. With a database-generated key, use the relationship or read the key after saving.
 
-Represent a stored file with the shared `FileBinding` containing the file ID issued by s3-storage. Each binding has one owner. Persist the binding and its business role. Read the original filename and byte length from storage by file ID when constructing a response or checking a quota. File checksums belong to storage. Omit SHA-256 from the material API. Identical bytes can be uploaded as distinct attachments; use a request identifier when the operation requires retry deduplication. Keep file metadata out of the consumer’s tables and submission snapshots. Use the storage contract for signed transfers and the shared persistence lifecycle to enqueue attachment and release events with the business change.
+Use the shared `FileBinding` for a reference to a file managed by `s3-storage`. The domain service owns the association and its business meaning. Read file metadata through the storage contract when the operation needs it.

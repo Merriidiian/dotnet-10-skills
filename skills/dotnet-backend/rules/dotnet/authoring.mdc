@@ -10,6 +10,6 @@ alwaysApply: false
 - Under 40 lines. English. `description` = WHAT + WHEN.
 - State the required shape. Do not argue from a specific service.
 - Use a self-contained template with neutral names. Introduce the inputs, show the operation and state the expected result. Identify dependencies the reader supplies.
-- Keep source repositories, branches, commit IDs, implementation links and internal service names out of reusable rules. Use actual framework identifiers where the API matters.
+- Use names of shared team components when the convention depends on their contract. Keep project-specific service names, API fields and business limits in the project. Confirm the scope of an ambiguous convention before publishing it.
 - Short bullets + one template. No filler. No BAD examples.
 - `alwaysApply: true` only for `00-core` and `00-stack`. `00-gitignore` is glob-scoped to `.gitignore`. Split past 50 lines except `00-gitignore`. Do not dump into `00-core`.

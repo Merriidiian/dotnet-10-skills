@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Proto names and tags
 
-- Name each RPC with a verb and its object, e.g. `CloseProject(CloseProjectRequest) returns (CloseProjectResponse)`. Give each operation its own request and response, including operations with no fields. Streaming RPCs use the same names for their streamed messages.
+- Name each RPC with a verb and its object, e.g. `CreateItem(CreateItemRequest) returns (CreateItemResponse)`. Give each operation its own request and response, including operations with no fields. Streaming RPCs use the same names for their streamed messages.
 - Fields: `snake_case`.
 - Append new field numbers. Never reuse or renumber.
 - Choose the C# namespace from the published contract package and bounded context. Keep it stable across files in that contract.

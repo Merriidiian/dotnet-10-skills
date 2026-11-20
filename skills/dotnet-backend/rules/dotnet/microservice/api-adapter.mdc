@@ -14,6 +14,6 @@ Override the generated gRPC service method, construct the Application command or
 Declare forwarding gRPC overrides and asynchronous event handlers with `async`. Await the mediator and propagate the cancellation token. For a gRPC method that only sends a command or query, use an expression body. Put `=>` at the end of the signature and the awaited call on the next line.
 
 ```csharp
-public override async Task<CloseProjectResponse> CloseProject(CloseProjectRequest request, ServerCallContext context) =>
-    await mediator.Send(new CloseProject(request), context.CancellationToken);
+public override async Task<CreateItemResponse> CreateItem(CreateItemRequest request, ServerCallContext context) =>
+    await mediator.Send(new CreateItem(request), context.CancellationToken);
 ```
