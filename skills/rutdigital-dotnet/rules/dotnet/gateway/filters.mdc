@@ -1,0 +1,13 @@
+---
+description: Gateway filters are explicit inputs mapped to gRPC
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# Gateway filters
+
+Do not use `[UseFiltering]` / `[UsePaging]` / `[UseSorting]` over gRPC results. Map gateway inputs to contract filters.
+
+```csharp
+Filters = mapper.MapFilters(start, end, quality)
+```

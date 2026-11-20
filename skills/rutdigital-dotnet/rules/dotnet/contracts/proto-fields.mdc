@@ -1,0 +1,23 @@
+---
+description: Protobuf RPC and field naming, stable tags
+globs: "**/*.proto"
+alwaysApply: false
+---
+
+# Proto names and tags
+
+- RPC: `VerbNoun`. Messages: `VerbNounRequest` / `VerbNounResponse`.
+- Fields: `snake_case`.
+- Append new field numbers. Never reuse or renumber.
+- `option csharp_namespace` is `RutDigital.Contracts.{Project}.{Service}` from `protos/{project}/{service}/`. Same folder, same option. Do not rename other services.
+
+```protobuf
+option csharp_namespace = "RutDigital.Contracts.{Project}.{Service}";
+
+rpc CreatePage (CreatePageRequest)
+    returns (CreatePageResponse);
+
+message CreatePageRequest {
+  Page page = 1;
+}
+```

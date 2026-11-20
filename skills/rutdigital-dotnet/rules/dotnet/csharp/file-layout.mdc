@@ -1,0 +1,20 @@
+---
+description: C# file layout. Use when creating or renaming .cs files.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# File layout
+
+- File-scoped namespaces.
+- One public type per file. File name = type name.
+- Do not put dots in class file names (`Type.Part.cs`). Partials: `TypePart.cs` (PascalCase suffix, no dots). Keep EF `*.Designer.cs` only when the tool generates them.
+- Place types under the feature folder that owns the context.
+- Command `record` and handler may share a file only while both stay tiny; prefer separate files as soon as either grows.
+
+```csharp
+namespace Application.Commands.Pages;
+
+public record CreatePageCommand(CreatePageRequest Request)
+    : IRequest<CreatePageResponse>;
+```

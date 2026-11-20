@@ -1,0 +1,16 @@
+---
+description: Primary constructors and DI. Use when adding handlers, services, DataLoaders, or gRPC adapters.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Constructors and DI
+
+Primary constructors for DI. Inject only what the type uses.
+
+```csharp
+public class CreatePageHandler(AppDbContext context, IMapper mapper)
+    : IRequestHandler<CreatePageCommand, CreatePageResponse>
+{
+}
+```

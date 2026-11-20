@@ -1,0 +1,13 @@
+---
+description: Detect gateway vs microservice vs contracts from the repo
+alwaysApply: true
+---
+
+# Stack
+
+Detect from the repo, then follow the matching glob rules under `rules/dotnet/`:
+
+- `InitGateway` / `Schema/Types` → GraphQL gateway. No REST. No business persistence.
+- `InitMicroservice` / `Api` + `Application` + `Domain` + `Domain.Data` → gRPC microservice. No REST controllers.
+- `protos/` + `Events/` → contracts. Search here before any cross-service DTO.
+- Not a .NET backend → ignore dotnet rules.

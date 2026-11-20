@@ -1,0 +1,12 @@
+---
+description: Missing GraphQL entity throws NotFoundError
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# Gateway not found
+
+```csharp
+if (response.Items.Count == 0)
+    throw new NotFoundError<Item>(id);
+```

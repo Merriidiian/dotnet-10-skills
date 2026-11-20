@@ -1,0 +1,23 @@
+---
+description: Thin gRPC and event adapters in the Api project. Use when writing GrpcServices or EventHandlers.
+globs:
+  - "**/*GrpcService*.cs"
+  - "**/EventHandlers/**/*.cs"
+alwaysApply: false
+---
+
+# Api adapter
+
+Override generated `*ServiceBase`. Send a MediatR request with `context.CancellationToken`. No validation, mapping, or EF in the adapter.
+
+Event handlers send a MediatR command the same way. Always `async Task` and `await` Send. Do not return the Task un-awaited.
+
+```csharp
+public override async Task<CreatePageResponse> CreatePage(
+    CreatePageRequest request,
+    ServerCallContext context) =>
+    await mediator.Send(new CreatePageCommand(request), context.CancellationToken);
+
+public async Task Handle(ItemChangedEvent evt, CancellationToken cancellationToken) =>
+    await mediator.Send(new ApplyItemChanged(evt), cancellationToken);
+```

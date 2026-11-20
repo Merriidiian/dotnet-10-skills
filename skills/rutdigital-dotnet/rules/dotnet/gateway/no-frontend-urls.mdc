@@ -1,0 +1,17 @@
+---
+description: Bind PublicAppDomain in Program.cs. Use when assembling public app links.
+globs:
+  - "**/Program.cs"
+  - "**/Options/**/*.cs"
+alwaysApply: false
+---
+
+# Public app domain
+
+Bind `PublicAppDomain` in `Program.cs`. Missing value throws `ConfigurationError`. Do not expose it as GraphQL auth config.
+
+```csharp
+var domain = builder.Configuration["PublicAppDomain"]?.Trim().TrimEnd('/');
+if (string.IsNullOrWhiteSpace(domain))
+    throw new ConfigurationError("В конфигурации обязателен ключ PublicAppDomain.");
+```

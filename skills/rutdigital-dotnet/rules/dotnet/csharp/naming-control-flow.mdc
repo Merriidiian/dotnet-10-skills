@@ -1,0 +1,21 @@
+---
+description: Method naming and control flow
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Naming and control flow
+
+- Name methods by outcome (`CreatePage`, `GetItem`).
+- Early return. Nest at most two levels.
+- Nullable enabled.
+
+```csharp
+public async Task<CreatePageResponse> Handle(
+    CreatePageCommand command,
+    CancellationToken cancellationToken)
+{
+    if (page.Stages.Count == 0)
+        throw new InvalidInputError("Нужен хотя бы один этап");
+}
+```

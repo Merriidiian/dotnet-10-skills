@@ -1,0 +1,17 @@
+---
+description: Do not return protobuf types from GraphQL resolvers
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# No protobuf in GraphQL
+
+Map contract responses to GraphQL models before returning.
+
+```csharp
+var response = await grpcClient.GetItemAsync(
+    new GetItemRequest { Id = id },
+    cancellationToken: cancellationToken);
+
+return mapper.Map(response.Item);
+```

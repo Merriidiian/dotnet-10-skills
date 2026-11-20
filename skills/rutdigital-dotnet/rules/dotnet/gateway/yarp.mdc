@@ -1,0 +1,17 @@
+---
+description: YARP reverse proxy is configuration-driven
+globs:
+  - "**/*Yarp*.cs"
+  - "**/appsettings*.json"
+alwaysApply: false
+---
+
+# YARP
+
+Routes and clusters live in configuration.
+
+```csharp
+services
+    .AddReverseProxy()
+    .LoadFromConfig(configuration.GetSection("YARP"));
+```

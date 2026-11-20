@@ -1,0 +1,14 @@
+---
+description: Domain and GraphQL error message language
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Error message language
+
+`InvalidInputError` and `AlreadyExistsError<T>` messages are Russian.
+
+```csharp
+throw new AlreadyExistsError<Page>(
+    $"Запись на дату {date:dd.MM.yyyy} уже существует");
+```

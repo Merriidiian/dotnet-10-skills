@@ -1,0 +1,18 @@
+---
+description: Journal and last activity use UsersActionsServiceClient. Use when adding gateway gRPC clients or activity loaders.
+globs:
+  - "**/GrpcConfigurator.cs"
+  - "**/appsettings.json"
+  - "**/DataLoaders/**/*.cs"
+alwaysApply: false
+---
+
+# Users-actions downstream
+
+Journal, descriptors, and last activity call `UsersActionsServiceClient`. Do not register `AdminServiceClient`. Keep camera list and health on `IpCameraServiceClient` and `TranslatorServiceClient`.
+
+```csharp
+r.AddGrpcClient<GrpcUsersActions.UsersActionsService.UsersActionsServiceClient>();
+r.AddGrpcClient<GrpcIpCamera.IpCameraService.IpCameraServiceClient>();
+r.AddGrpcClient<GrpcTranslator.TranslatorService.TranslatorServiceClient>();
+```

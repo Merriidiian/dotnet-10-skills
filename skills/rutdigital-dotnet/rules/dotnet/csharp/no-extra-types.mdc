@@ -1,0 +1,13 @@
+---
+description: Do not invent speculative helpers or options bags
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# No speculative types
+
+Do not add a public helper, options bag, or shared abstraction for a one-off block.
+
+A nested private class is allowed only when the host API requires a type (`Interceptor`, `IHostedService`).
+
+Splitting by feature folder / file / focused method is required — see `split-by-context`.

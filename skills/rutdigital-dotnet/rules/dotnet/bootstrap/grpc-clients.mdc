@@ -1,0 +1,24 @@
+---
+description: Register downstream gRPC clients through Common
+globs:
+  - "**/Program.cs"
+  - "**/*Grpc*.cs"
+alwaysApply: false
+---
+
+# gRPC clients
+
+Gateway: `AddGrpcClientsFromConfiguration` plus generated `*ServiceClient`.
+
+Register the clients the service uses. Extra `Grpc:Clients` keys and missing addresses do not fail startup; Common logs a warning.
+
+Unary calls get a 10s deadline unless the caller set one. Channel retries `Unavailable` and `DeadlineExceeded` (3 attempts). Streaming is unchanged.
+
+Do not call `AddGrpcClient` without the Common helper.
+
+```csharp
+services.AddGrpcClientsFromConfiguration(builder.Configuration, registry =>
+{
+    registry.AddGrpcClient<FileShelfGrpcClient>();
+});
+```

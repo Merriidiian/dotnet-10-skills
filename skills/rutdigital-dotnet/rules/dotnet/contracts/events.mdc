@@ -1,0 +1,13 @@
+---
+description: Integration events in the contracts repo
+globs: "**/Events/**/*.cs"
+alwaysApply: false
+---
+
+# Events
+
+`record` under `Events/<Context>/`. Inherit `Event`. CLR type name is the routing identity.
+
+```csharp
+public record FileUploadedEvent(string FileId) : Event;
+```

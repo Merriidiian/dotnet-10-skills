@@ -1,0 +1,31 @@
+---
+description: InitMicroservice and UseMicroservice bootstrap
+globs:
+  - "**/Program.cs"
+  - "**/*ApplicationSetting.cs"
+alwaysApply: false
+---
+
+# InitMicroservice
+
+Any microservice always uses these ports. Do not pick other numbers.
+
+```csharp
+const int GrpcPort = 28700;
+const int InternalPort = 8080;
+
+builder.InitMicroservice<AppDbContext>(options =>
+{
+    options.Config = config;
+    options.AddGrpc = true;
+    options.GrpcPort = GrpcPort;
+    options.InternalPort = InternalPort;
+    options.ConfigureServices = services =>
+    {
+        services.AddScoped<AppServiceBase, AppGrpcService>();
+        services.AddApplication();
+    };
+});
+
+app.UseMicroservice<AppDbContext, AppGrpcService>(GrpcPort, InternalPort);
+```

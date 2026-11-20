@@ -1,0 +1,14 @@
+---
+description: Search contracts before inventing a wire DTO
+globs:
+  - "**/*.proto"
+  - "**/Events/**/*.cs"
+  - "**/*.cs"
+alwaysApply: false
+---
+
+# Search contracts first
+
+Search `protos/` and `Events/` before adding a wire type. Reuse generated contract types.
+
+Cross-service types live in contracts. Domain models stay in the owning service.

@@ -1,0 +1,24 @@
+---
+description: IMapper lives in the Application layer. Use when mapping gRPC and domain.
+globs:
+  - "**/Application/**/*.cs"
+  - "**/Mapper.cs"
+  - "**/IMapper.cs"
+alwaysApply: false
+---
+
+# Application mapper
+
+Only `IMapper.cs` and `Mapper.cs` in the Application project root. All mapping is `Map(...)` overloads on those types.
+
+No `*Mapping` classes, no `Mapping/` folder, no AutoMapper, no `ToContract`/`ToDto`/extension map methods outside `IMapper`/`Mapper`.
+
+Register in `AddApplication()`: `services.AddScoped<IMapper, Mapper>()`.
+
+```csharp
+public interface IMapper
+{
+    Page Map(GrpcPage page);
+    GrpcPage Map(Page page);
+}
+```

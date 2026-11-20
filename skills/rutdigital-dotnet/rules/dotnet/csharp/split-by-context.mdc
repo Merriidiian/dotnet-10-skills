@@ -1,0 +1,16 @@
+---
+description: Split by feature directories, files, and focused methods
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Split by context
+
+Organize so each folder, file, and method has one clear context.
+
+- Feature folders under Application (`Commands/<Feature>/`, `Queries/<Feature>/`).
+- One public type per file; file name = type name.
+- Methods do one job; extract a private method when a block has its own meaning.
+- Prefer separate files for command `record` and handler when both grow past a few lines.
+
+Do not invent extra layers for this — only clear placement by context.

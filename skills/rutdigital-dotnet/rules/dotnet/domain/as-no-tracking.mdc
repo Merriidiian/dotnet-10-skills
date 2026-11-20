@@ -1,0 +1,15 @@
+---
+description: AsNoTracking on reads
+globs: "**/Application/**/*.cs"
+alwaysApply: false
+---
+
+# Tracking
+
+Reads: `AsNoTracking()`. Writes: tracked aggregates + `SaveChangesAsync`.
+
+```csharp
+var pages = await context.Pages
+    .AsNoTracking()
+    .ToListAsync(cancellationToken);
+```

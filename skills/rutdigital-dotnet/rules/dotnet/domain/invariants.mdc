@@ -1,0 +1,22 @@
+---
+description: Domain invariants live on the aggregate
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/Application/**/*.cs"
+alwaysApply: false
+---
+
+# Invariants
+
+Enforce invariants in domain methods with `InvalidInputError`. Do not expose the backing list.
+
+```csharp
+private void AddStage(PageStage stage)
+{
+    if (_stages.Any(s => s.Stage == stage.Stage))
+        throw new InvalidInputError("Этап уже добавлен");
+
+    stage.AttachToPage(Id);
+    _stages.Add(stage);
+}
+```

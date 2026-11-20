@@ -1,0 +1,19 @@
+---
+description: Protobuf file layout per domain
+globs: "**/*.proto"
+alwaysApply: false
+---
+
+# Proto layout
+
+- `protos/<product>/<domain>/`: `models.proto`, `filters.proto`, `<domain>.proto` or `<domain>_service.proto`.
+- Entities in `models.proto`. Filters in `filters.proto`. RPCs in the service file.
+- Import existing models. Do not duplicate enums.
+
+```protobuf
+syntax = "proto3";
+package product.domain;
+
+import "product/domain/models.proto";
+import "google/protobuf/timestamp.proto";
+```

@@ -1,0 +1,26 @@
+---
+description: Gateway middleware pipeline order
+globs: "**/Program.cs"
+alwaysApply: false
+---
+
+# Gateway pipeline
+
+After HTTPS/CORS/error middleware:
+
+`UseRouting` → `UseWebSockets` → `UseCurrentUser` → `UseGateway` → `MapGatewayEndpoints` → `MapReverseProxy`.
+
+```csharp
+app.UseRouting();
+app.UseWebSockets();
+app.UseCurrentUser();
+app.UseGateway();
+
+app.MapGatewayEndpoints(new GatewayEndpointOptions
+{
+    EnableNitro = enableNitro,
+    NitroTitle = nitroTitle,
+});
+
+app.MapReverseProxy();
+```

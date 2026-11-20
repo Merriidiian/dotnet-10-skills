@@ -1,0 +1,17 @@
+---
+description: When to use record vs class
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Records vs classes
+
+- `record`: MediatR commands/queries, simple GraphQL inputs.
+- `class`: handlers, gRPC adapters, entities, EF configs, GraphQL extensions, mappers, DataLoaders.
+
+```csharp
+public record CreatePageCommand(CreatePageRequest Request)
+    : IRequest<CreatePageResponse>;
+
+public class CreatePageHandler { }
+```

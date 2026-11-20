@@ -1,0 +1,19 @@
+---
+description: Handlers return generated gRPC contract types
+globs: "**/Application/**/*.cs"
+alwaysApply: false
+---
+
+# Handler return types
+
+Handlers return generated contract responses.
+
+```csharp
+public record CreatePageCommand(CreatePageRequest Request)
+    : IRequest<CreatePageResponse>;
+
+public class CreatePageHandler(AppDbContext context, IMapper mapper)
+    : IRequestHandler<CreatePageCommand, CreatePageResponse>
+{
+}
+```

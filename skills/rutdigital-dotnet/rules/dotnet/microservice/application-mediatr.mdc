@@ -1,0 +1,22 @@
+---
+description: MediatR handlers and ApplicationSetting
+globs:
+  - "**/Application/**/*.cs"
+  - "**/*ApplicationSetting.cs"
+alwaysApply: false
+---
+
+# Application MediatR
+
+- Multiple features: `Commands/<Feature>/`, `Queries/<Feature>/`.
+- One public type per file; command `record` and handler in separate files when either is more than a few lines.
+- `AddApplication()` registers scoped mapper + MediatR from the Application assembly.
+
+```csharp
+public static IServiceCollection AddApplication(this IServiceCollection services)
+{
+    services.AddScoped<IMapper, Mapper>();
+    services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(ApplicationSetting).Assembly));
+    return services;
+}
+```

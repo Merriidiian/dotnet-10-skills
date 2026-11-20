@@ -1,0 +1,14 @@
+---
+description: Do not add specs/ helper folders. Use when scaffolding a service or copying from old code.
+globs:
+  - "**/specs/**"
+  - "**/*.csproj"
+  - "**/Program.cs"
+alwaysApply: false
+---
+
+# No specs
+
+Do not add `specs/` (EF migration wrappers, linux/windows scripts, copied deployment files).
+
+Add and remove migrations with `dotnet ef` on Domain.Data, startup project Api. No shell or bat wrappers.

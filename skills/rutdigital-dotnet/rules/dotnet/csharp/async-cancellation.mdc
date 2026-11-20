@@ -1,0 +1,20 @@
+---
+description: Forward CancellationToken; Task methods are always async/await. Use when writing async C#.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Async and cancellation
+
+Methods that return `Task` or `Task<T>` are `async` and `await`. Do not return the Task un-awaited.
+
+Pass `CancellationToken` from `ServerCallContext` or GraphQL into MediatR, EF, and gRPC clients.
+
+```csharp
+public override async Task<CreatePageResponse> CreatePage(
+    CreatePageRequest request,
+    ServerCallContext context) =>
+    await mediator.Send(new CreatePageCommand(request), context.CancellationToken);
+
+await context.SaveChangesAsync(cancellationToken);
+```

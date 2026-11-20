@@ -1,0 +1,18 @@
+---
+description: Extend Common GraphQL Query/Mutation/Subscription roots
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# Extend roots
+
+Extend `RutDigital.Common.Gateway.GraphQL` roots. Do not declare a new root `Query` / `Mutation` / `Subscription`.
+
+```csharp
+using RutDigital.Common.Gateway.GraphQL;
+
+[ExtendObjectType(typeof(Query))]
+public class ItemQuery
+{
+}
+```

@@ -1,0 +1,12 @@
+---
+description: EF tools use the Api host. Use when adding DbContext, migrations, or a design-time factory.
+globs:
+  - "**/Program.cs"
+  - "**/*DbContext*.cs"
+  - "**/Domain.Data/**/*.cs"
+alwaysApply: false
+---
+
+# Design-time DbContext
+
+`dotnet ef` uses the Api startup project and `InitMicroservice`. Keep the DbContext in Domain.Data only.

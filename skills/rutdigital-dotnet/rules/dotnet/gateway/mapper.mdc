@@ -1,0 +1,16 @@
+---
+description: Gateway IMapper. Use when mapping GraphQL and gRPC.
+globs:
+  - "**/Schema/**/*.cs"
+  - "**/Mapper.cs"
+  - "**/IMapper.cs"
+alwaysApply: false
+---
+
+# Gateway mapper
+
+GraphQL input → `IMapper` → gRPC request → client → `IMapper` → GraphQL model.
+
+Methods on `Schema/IMapper.cs` and `Schema/Mapper.cs` only — all named `Map`. No `Mapping/` folder, no AutoMapper, no `*Mapping` types or `ToDto`/`ToContract` outside `IMapper`/`Mapper`.
+
+Inject clients and mapper with `[Service]`. Pass `CancellationToken`.

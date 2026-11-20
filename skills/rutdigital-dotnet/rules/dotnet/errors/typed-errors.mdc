@@ -1,0 +1,20 @@
+---
+description: Typed domain errors from Common. Use when throwing expected failures.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Typed errors
+
+Throw `RutDigital.Common.Domain.Errors` for expected client failures.
+
+- `InvalidInputError` — validation / bad arguments
+- `NotFoundError<T>` — missing entity
+- `AlreadyExistsError<T>` — duplicate
+- `InvalidOperationError` — illegal state
+- `ForbiddenError` / `UnauthenticatedError` — authz
+
+```csharp
+if (response.Items.Count == 0)
+    throw new NotFoundError<Item>(id);
+```

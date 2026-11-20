@@ -1,0 +1,26 @@
+---
+description: Resolve scoped services per request in GraphQL field middleware. Use when writing or editing UseField middleware.
+globs: "**/*Middleware*.cs"
+alwaysApply: false
+---
+
+# Field middleware DI
+
+HotChocolate caches field middleware per field. Do not inject scoped services in the constructor (`ICurrentUserAccessor`, `IRequestContext`, other scoped types).
+
+Resolve them per request: `InvokeAsync` parameters or `context.Services.GetRequiredService<T>()`.
+
+Request / correlation id: `RequestContextScope.Current`, not scoped `IRequestContext` in the ctor.
+
+```csharp
+public class ItemMiddleware(FieldDelegate next)
+{
+    public async Task InvokeAsync(
+        IMiddlewareContext context,
+        ICurrentUserAccessor currentUserAccessor)
+    {
+        var userId = currentUserAccessor.CurrentUserId?.ToString();
+        await next(context);
+    }
+}
+```

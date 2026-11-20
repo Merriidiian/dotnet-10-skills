@@ -1,0 +1,15 @@
+---
+description: Never use protobuf reserved. Use when adding or editing .proto messages.
+globs: "**/*.proto"
+alwaysApply: false
+---
+
+# No reserved
+
+Do not write `reserved`. Leave unused numbers unused. Append new tags.
+
+```protobuf
+message CreatePageRequest {
+  Page page = 1;
+}
+```

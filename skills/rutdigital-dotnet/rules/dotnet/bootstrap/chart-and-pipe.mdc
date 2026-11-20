@@ -1,0 +1,20 @@
+---
+description: Bump chart and pipe versions only. Keep existing values-prod. Use when editing chart/ or .gitlab-ci.yml.
+globs: ".gitlab-ci.yml,chart/**"
+alwaysApply: false
+---
+
+# Chart and pipe
+
+Pipe `ref` and `basechart-deployment` version come from `users-actions` `init`. Same pair on every service. Do not leave an older pair.
+
+Leave `values-prod.yaml` as it is in the service. Do not copy microservice values onto a gateway or rewrite prod values from the template.
+
+`chart/` has `Chart.yaml` and `values-prod.yaml` only. Delete `values-dev-*`.
+
+```yaml
+include:
+  - project: "rutdigital/devops/pipelines_general/build_deploy_docker"
+    file: "pipe.yaml"
+    ref: "2.0.2"
+```

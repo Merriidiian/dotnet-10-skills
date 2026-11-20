@@ -1,0 +1,16 @@
+---
+description: Core session behavior for .NET backends
+alwaysApply: true
+---
+
+# Core
+
+Reply in Russian. Code, identifiers, commits, and PR text in English. Comments and XML docs in Russian. Domain error messages in Russian.
+
+Apply the rest only when this workspace is a .NET backend (see `00-stack`).
+
+Read neighboring files and copy their shape. Do not invent architecture or names.
+
+Small diffs. No extra refactors, unused helpers, or speculative types. Do not write README.
+
+`net10.0`. Use `RutDigital.Common.*`. Do not hand-roll ASP.NET, EF, RabbitMQ, or gRPC.

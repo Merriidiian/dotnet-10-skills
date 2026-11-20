@@ -1,0 +1,11 @@
+---
+description: Gateway Schema/Types folder layout
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# Gateway folders
+
+Feature folders under `Schema/Types/<Feature>/`:
+
+`*Query`, `*Mutation`, `*Subscription`, `Input/`, `Output/`, `Models/`, `DataLoaders/`.

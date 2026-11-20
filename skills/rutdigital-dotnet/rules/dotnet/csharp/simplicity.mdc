@@ -1,0 +1,13 @@
+---
+description: Prefer simple obvious code over speculative abstractions
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Simplicity
+
+If it can be written simply and read without ceremony, do that.
+
+Do not add layers, patterns, generics, or shared helpers for a one-off. Prefer direct code in the feature that needs it.
+
+Small diffs. No speculative types “for later”.

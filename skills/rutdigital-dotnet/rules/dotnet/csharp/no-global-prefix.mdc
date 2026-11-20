@@ -1,0 +1,15 @@
+---
+description: Do not qualify types with global::. Use when a GraphQL model and a contract type share a name.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# No global::
+
+Do not write `global::`. Alias the colliding namespace.
+
+```csharp
+using GrpcPages = Pages.Contracts;
+
+public GrpcPages.Page Map(PageInput source);
+```

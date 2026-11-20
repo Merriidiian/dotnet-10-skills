@@ -1,0 +1,16 @@
+---
+description: LINQ method syntax only. Use when filtering or projecting sequences.
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# LINQ
+
+Method chains only. No query syntax (`from … in … select`).
+
+```csharp
+var items = source
+    .Where(x => x.IsActive)
+    .Select(Map)
+    .ToList();
+```

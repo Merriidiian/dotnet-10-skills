@@ -1,0 +1,18 @@
+---
+description: Admin GraphQL fields are not permission catalog rows. Use when seeding permissions or adding an admin schema.
+globs:
+  - "**/permissions.go"
+  - "**/AccessControl/*.cs"
+alwaysApply: false
+---
+
+# Admin is not a permission
+
+Do not insert admin-console GraphQL fields into `permissions`. That schema is gated by the caller admin flag, not by permission names.
+
+Journal titles for those fields go to users-actions descriptors only.
+
+```csharp
+if (!user.IsAdmin)
+    throw new ForbiddenError("Недостаточно прав");
+```

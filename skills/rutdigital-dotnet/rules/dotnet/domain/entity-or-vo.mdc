@@ -1,0 +1,35 @@
+---
+description: Domain public classes are Entity or ValueObject. Use when adding a Domain type.
+globs: "**/*.Domain/**/*.cs"
+alwaysApply: false
+---
+
+# Entity or value object
+
+A public Domain class is an entity or `ValueObject`. No static helper classes.
+
+- Entity: a unique core thing with identity (the aggregate or an independent record).
+- Value object: a value unique by its attributes. Every VO overrides `GetEqualityComponents` and yields every attribute.
+
+```csharp
+public class FullName : ValueObject
+{
+    public FullName(string name, string surname, string? patronymic)
+    {
+        Name = name.Trim();
+        Surname = surname.Trim();
+        Patronymic = patronymic;
+    }
+
+    public string Name { get; private set; }
+    public string Surname { get; private set; }
+    public string? Patronymic { get; private set; }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return Name;
+        yield return Surname;
+        yield return Patronymic ?? string.Empty;
+    }
+}
+```

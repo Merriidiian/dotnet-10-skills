@@ -1,0 +1,22 @@
+---
+description: Caller access check on every GraphQL root field. Use when writing gateway field middleware that gates the schema.
+globs: "**/AccessControl/*.cs"
+alwaysApply: false
+---
+
+# Gateway caller check
+
+Check the caller on every root field. Do not skip introspection, a named field, or subscriptions.
+
+Nested selections (`Path.Length != 1`) are the same operation; do not check them again.
+
+```csharp
+if (context.Path.Length != 1)
+{
+    await next(context);
+    return;
+}
+
+var userId = currentUserAccessor.CurrentUserId?.ToString()
+    ?? throw new UnauthenticatedError("Пользователь не авторизован");
+```
