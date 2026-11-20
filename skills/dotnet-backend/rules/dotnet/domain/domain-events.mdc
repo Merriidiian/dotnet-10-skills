@@ -9,6 +9,6 @@ alwaysApply: false
 
 # Events consumed by their producer
 
-The aggregate changes state and enforces its rules synchronously. When the service needs a separate reaction, the command handler stages a Protobuf event in its Outbox and saves it together with that change. Use the broker for this path even when the producer and consumer are the same service. Avoid `AddDomainEvent` and in-process `INotification` dispatch.
+Services do not use in-process domain events. Publish events through RabbitMQ using the transactional Outbox. A service that reacts to its own event consumes it through its own queue and Inbox. The aggregate enforces its rules synchronously. The command handler saves the state change and its Protobuf event together. Do not use `AddDomainEvent` or `INotification` to dispatch events.
 
 For example, a service that records a booking and then sends a confirmation can publish `BookingRecorded` and bind its own queue to that event type. After commit the relay delivers it through RabbitMQ. The consumer uses the service's Inbox and calls a Mediator handler. Stage the reaction and the Inbox receipt in one unit of work. A replay of the same envelope must produce one confirmation. Bind the queue to the input event type so an outgoing confirmation cannot trigger the same handler again.
