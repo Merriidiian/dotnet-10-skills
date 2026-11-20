@@ -1,35 +1,17 @@
 ---
-description: Domain public classes are Entity or ValueObject. Use when adding a Domain type.
-globs: "**/*.Domain/**/*.cs"
+description: Choose a Common base type for every Domain class, regardless of visibility
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/Domain/**/*.cs"
 alwaysApply: false
 ---
 
-# Entity or value object
+# Domain classes
 
-A public Domain class is an entity or `ValueObject`. No static helper classes.
+Every Domain class derives from the service's Common `MutableEntity`, `Entity` or `ValueObject` base.
 
-- Entity: a unique core thing with identity (the aggregate or an independent record).
-- Value object: a value unique by its attributes. Every VO overrides `GetEqualityComponents` and yields every attribute.
+- Use `MutableEntity` for an entity with identity and an editable lifecycle that uses modification tracking or versioning.
+- Use `Entity` for an identified record such as a publication with its own creation audit.
+- Use `ValueObject` for a value defined by its attributes. In `GetEqualityComponents()`, yield all components that determine equality.
 
-```csharp
-public class FullName : ValueObject
-{
-    public FullName(string name, string surname, string? patronymic)
-    {
-        Name = name.Trim();
-        Surname = surname.Trim();
-        Patronymic = patronymic;
-    }
-
-    public string Name { get; private set; }
-    public string Surname { get; private set; }
-    public string? Patronymic { get; private set; }
-
-    protected override IEnumerable<object> GetEqualityComponents()
-    {
-        yield return Name;
-        yield return Surname;
-        yield return Patronymic ?? string.Empty;
-    }
-}
-```
+Keep validation on the entity or value object that owns the rule. Put request DTOs, query helpers and mappers in their respective layers.

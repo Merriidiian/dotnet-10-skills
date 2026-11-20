@@ -7,10 +7,9 @@ alwaysApply: false
 # File layout
 
 - File-scoped namespaces.
-- One public type per file. File name = type name.
+- Name each file after its main type. Keep an Application operation and its handler in the same file. Otherwise use one public type per file.
 - Do not put dots in class file names (`Type.Part.cs`). Partials: `TypePart.cs` (PascalCase suffix, no dots). Keep EF `*.Designer.cs` only when the tool generates them.
 - Place types under the feature folder that owns the context.
-- Command `record` and handler may share a file only while both stay tiny; prefer separate files as soon as either grows.
 
 ```csharp
 namespace Application.Commands.Pages;

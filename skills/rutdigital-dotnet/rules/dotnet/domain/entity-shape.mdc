@@ -1,24 +1,15 @@
 ---
-description: Domain entity shape — Entity/MutableEntity, private setters
-globs: "**/*.Domain/**/*.cs"
+description: Encapsulate entity state and collections when implementing a Domain model
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/Domain/**/*.cs"
 alwaysApply: false
 ---
 
 # Entity shape
 
-- Inherit `Entity` or `MutableEntity<TKey>`. `TKey` is the id type: `MutableEntity<Guid>`.
-- `Entity.Id` is `Guid`. Private setters. Private parameterless ctor for EF (`#pragma warning disable CS8618` around it).
-- Collections of entities: private `List<T>` + public `IReadOnlyCollection<T>` via `.AsReadOnly()`.
-- Primitive id lists: `ICollection<T> { get; private set; } = []` so EF maps them without `HasField`.
-
-```csharp
-public class Page : MutableEntity<Guid>
-{
-    private Page() { }
-
-    public DateTimeOffset DateAdded { get; private set; }
-
-    private readonly List<PageStage> _stages = [];
-    public IReadOnlyCollection<PageStage> Stages => _stages.AsReadOnly();
-}
-```
+Use the Common base from `entity-or-vo.mdc` in the signature supported by the installed package. Use the non-generic `MutableEntity` when that is the service's base for a Guid key.
+Keep mapped setters private by default. Use a private parameterless constructor when EF materialization requires it.
+Expose named operations for state changes. Validate the complete candidate state before mutating fields, versions or collections. Reuse the same validation path for creation and edits when they share invariants.
+Copy an incoming mutable collection before retaining it. Keep entity collections in a private list and expose a read-only view.
+For EF-mapped primitive ID lists, follow the collection mapping already used by the service.

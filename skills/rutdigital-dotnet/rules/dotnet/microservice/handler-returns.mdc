@@ -1,19 +1,35 @@
 ---
-description: Handlers return generated gRPC contract types
-globs: "**/Application/**/*.cs"
+description: Implement a command or query as a readable sequence that returns the generated contract response
+globs:
+  - "**/Application/**/*.cs"
+  - "**/*.Application/**/*.cs"
 alwaysApply: false
 ---
 
-# Handler return types
+# Handler flow
 
-Handlers return generated contract responses.
+For a write, read the request, resolve the identifiers and related entities needed for the operation, then create the entity or call its domain method. Save with `SaveChangesAsync(cancellationToken)` before mapping the successful response.
+
+For a read, query with `AsNoTracking()`, restrict the result to its owner when applicable, apply the order promised by the contract and map the result. Keep read-only paths free of writes. Return the generated response type.
+
+Keep business invariants on the domain model. The handler coordinates storage, mapping and the operation's external context. Read the current actor and time through injected accessors when the operation needs them.
 
 ```csharp
-public record CreatePageCommand(CreatePageRequest Request)
-    : IRequest<CreatePageResponse>;
+public record GetCatalogItems : IRequest<Contracts.GetCatalogItemsResponse>;
 
-public class CreatePageHandler(AppDbContext context, IMapper mapper)
-    : IRequestHandler<CreatePageCommand, CreatePageResponse>
+public sealed class GetCatalogItemsHandler(CatalogDbContext context, IMapper mapper)
+    : IRequestHandler<GetCatalogItems, Contracts.GetCatalogItemsResponse>
 {
+    public async ValueTask<Contracts.GetCatalogItemsResponse> Handle(
+        GetCatalogItems query, CancellationToken cancellationToken)
+    {
+        var items = await context.Items
+            .AsNoTracking()
+            .OrderBy(item => item.Name)
+            .ThenBy(item => item.Id)
+            .ToListAsync(cancellationToken);
+
+        return mapper.Map(items);
+    }
 }
 ```

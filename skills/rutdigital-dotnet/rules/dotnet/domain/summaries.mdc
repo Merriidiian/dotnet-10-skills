@@ -1,0 +1,20 @@
+---
+description: Document every Domain class and member with a three-line Russian XML summary
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/Domain/**/*.cs"
+alwaysApply: false
+---
+
+# Domain summaries
+
+Document each class, field, property, constructor and method declared in Domain, regardless of visibility. Include private backing fields, helper methods and overrides. Document each domain enum and each enum member in the same form.
+
+Use exactly three lines per summary. Put the opening tag, one short Russian sentence or phrase, and the closing tag on separate lines. Describe what the value means or what the operation does in the domain.
+
+```csharp
+/// <summary>
+/// Дата начала приёма заявок.
+/// </summary>
+public DateOnly OpensOn { get; private set; }
+```

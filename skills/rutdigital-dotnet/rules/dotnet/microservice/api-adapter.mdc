@@ -1,23 +1,14 @@
 ---
-description: Thin gRPC and event adapters in the Api project. Use when writing GrpcServices or EventHandlers.
+description: Forward gRPC and event inputs to their Application operation
 globs:
   - "**/*GrpcService*.cs"
+  - "**/*GrpcEndpoints.cs"
   - "**/EventHandlers/**/*.cs"
 alwaysApply: false
 ---
 
 # Api adapter
 
-Override generated `*ServiceBase`. Send a MediatR request with `context.CancellationToken`. No validation, mapping, or EF in the adapter.
+Override the generated gRPC service method, construct the Application command or query, and send it with `context.CancellationToken`. Keep persistence and domain decisions in the owning layers.
 
-Event handlers send a MediatR command the same way. Always `async Task` and `await` Send. Do not return the Task un-awaited.
-
-```csharp
-public override async Task<CreatePageResponse> CreatePage(
-    CreatePageRequest request,
-    ServerCallContext context) =>
-    await mediator.Send(new CreatePageCommand(request), context.CancellationToken);
-
-public async Task Handle(ItemChangedEvent evt, CancellationToken cancellationToken) =>
-    await mediator.Send(new ApplyItemChanged(evt), cancellationToken);
-```
+For a single forwarding call, return the mediator result in the type required by the transport. Use `.AsTask()` to adapt a `ValueTask<T>` to a gRPC `Task<T>`. Event handlers forward the incoming event and its cancellation token to the matching command.

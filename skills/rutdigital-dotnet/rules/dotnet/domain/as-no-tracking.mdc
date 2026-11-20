@@ -1,6 +1,8 @@
 ---
 description: AsNoTracking on reads
-globs: "**/Application/**/*.cs"
+globs:
+  - "**/Application/**/*.cs"
+  - "**/*.Application/**/*.cs"
 alwaysApply: false
 ---
 

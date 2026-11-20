@@ -13,4 +13,4 @@ Read neighboring files and copy their shape. Do not invent architecture or names
 
 Small diffs. No extra refactors, unused helpers, or speculative types. Do not write README.
 
-`net10.0`. Use `RutDigital.Common.*`. Do not hand-roll ASP.NET, EF, RabbitMQ, or gRPC.
+`net10.0`. Use the service's existing Common packages and their installed APIs. Do not hand-roll ASP.NET, EF, RabbitMQ, or gRPC.

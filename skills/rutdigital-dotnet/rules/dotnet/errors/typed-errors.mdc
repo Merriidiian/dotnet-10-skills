@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Typed errors
 
-Throw `RutDigital.Common.Domain.Errors` for expected client failures.
+Use typed errors from the service’s Common domain package for expected client failures.
 
 - `InvalidInputError` — validation / bad arguments
 - `NotFoundError<T>` — missing entity

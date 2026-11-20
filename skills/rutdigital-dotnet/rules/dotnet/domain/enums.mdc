@@ -1,0 +1,33 @@
+---
+description: Define domain enums with explicit stable values and documented members
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/Domain/**/*.cs"
+alwaysApply: false
+---
+
+# Domain enums
+
+Place each enum in its own `Enums/<Name>.cs` under Domain. Use a file-scoped namespace ending in `.Domain.Enums` and PascalCase names.
+Assign each member an explicit integer. For a new sequence, start at zero with the appropriate initial value. Preserve assigned numbers when a stored or published enum evolves.
+Use three-line Russian summaries on the type and each member. Separate members with a blank line and keep the trailing comma.
+
+```csharp
+namespace Catalog.Domain.Enums;
+
+/// <summary>
+/// Состояние каталога.
+/// </summary>
+public enum CatalogState
+{
+    /// <summary>
+    /// Подготовка к публикации.
+    /// </summary>
+    Draft = 0,
+
+    /// <summary>
+    /// Каталог опубликован.
+    /// </summary>
+    Published = 1,
+}
+```

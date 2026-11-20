@@ -8,9 +8,8 @@ alwaysApply: false
 
 Organize so each folder, file, and method has one clear context.
 
-- Feature folders under Application (`Commands/<Feature>/`, `Queries/<Feature>/`).
-- One public type per file; file name = type name.
+- Group commands by feature. Reads go under `Queries/`, optionally grouped by feature.
 - Methods do one job; extract a private method when a block has its own meaning.
-- Prefer separate files for command `record` and handler when both grow past a few lines.
+- Keep the Application request and handler together as one use case. Extract a focused query or lookup when multiple operations actually share it.
 
 Do not invent extra layers for this — only clear placement by context.

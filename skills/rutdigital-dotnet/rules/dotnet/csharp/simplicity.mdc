@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Simplicity
 
-If it can be written simply and read without ceremony, do that.
+Make the use case readable from top to bottom. Name local variables after the domain concepts they hold. Put guard clauses before state changes. Give loading, mutation, saving and response mapping their own short blocks when the operation needs them.
 
 Do not add layers, patterns, generics, or shared helpers for a one-off. Prefer direct code in the feature that needs it.
 

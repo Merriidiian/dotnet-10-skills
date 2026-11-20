@@ -1,7 +1,8 @@
 ---
-description: IMapper lives in the Application layer. Use when mapping gRPC and domain.
+description: Place the Application mapping interface and wire up its contract mapper
 globs:
   - "**/Application/**/*.cs"
+  - "**/*.Application/**/*.cs"
   - "**/Mapper.cs"
   - "**/IMapper.cs"
 alwaysApply: false
@@ -9,16 +10,6 @@ alwaysApply: false
 
 # Application mapper
 
-Only `IMapper.cs` and `Mapper.cs` in the Application project root. All mapping is `Map(...)` overloads on those types.
+Declare `IMapper` in Application. Handlers call typed `Map(...)` overloads. For the reference layout, implement `Mapper` in Api and register it in the service's Api setup. A stateless mapper with singleton-safe dependencies can use singleton lifetime.
 
-No `*Mapping` classes, no `Mapping/` folder, no AutoMapper, no `ToContract`/`ToDto`/extension map methods outside `IMapper`/`Mapper`.
-
-Register in `AddApplication()`: `services.AddScoped<IMapper, Mapper>()`.
-
-```csharp
-public interface IMapper
-{
-    Page Map(GrpcPage page);
-    GrpcPage Map(Page page);
-}
-```
+Keep Protobuf conversions at this boundary. Check scalar presence with `Has…` when absence matters. Set optional response fields only when their domain values are present. Preserve the distinction between a calendar date and an instant.

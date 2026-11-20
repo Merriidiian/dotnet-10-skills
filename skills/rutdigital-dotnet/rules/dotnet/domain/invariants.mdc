@@ -2,7 +2,9 @@
 description: Domain invariants live on the aggregate
 globs:
   - "**/*.Domain/**/*.cs"
+  - "**/Domain/**/*.cs"
   - "**/Application/**/*.cs"
+  - "**/*.Application/**/*.cs"
 alwaysApply: false
 ---
 
@@ -11,6 +13,9 @@ alwaysApply: false
 Enforce invariants in domain methods with `InvalidInputError`. Do not expose the backing list.
 
 ```csharp
+/// <summary>
+/// Добавляет этап в коллекцию страницы.
+/// </summary>
 private void AddStage(PageStage stage)
 {
     if (_stages.Any(s => s.Stage == stage.Stage))

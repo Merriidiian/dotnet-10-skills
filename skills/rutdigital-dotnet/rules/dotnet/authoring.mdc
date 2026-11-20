@@ -9,6 +9,7 @@ alwaysApply: false
 - One concern. `rules/dotnet/<area>/<concern>.mdc`. Areas: `csharp`, `errors`, `contracts`, `bootstrap`, `microservice`, `domain`, `gateway`.
 - Under 40 lines. English. `description` = WHAT + WHEN.
 - State the required shape. Do not argue from a specific service.
+- Adapt the relevant code into a self-contained example with neutral names. Show the operation itself, so the rule works without paths or links to the original service.
 - No product names. `RutDigital` only for `RutDigital.Common.*`.
 - Short bullets + one template. No filler. No BAD examples.
 - `alwaysApply: true` only for `00-core` and `00-stack`. `00-gitignore` is glob-scoped to `.gitignore`. Split past 50 lines except `00-gitignore`. Do not dump into `00-core`.

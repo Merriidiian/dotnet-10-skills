@@ -1,24 +1,11 @@
 ---
-description: Russian XML docs and comments for non-obvious logic
+description: Russian comments and the scope of mandatory XML documentation in C#
 globs: "**/*.cs"
 alwaysApply: false
 ---
 
 # Comments
 
-Comments and XML docs are in Russian. Identifiers stay English.
-
-XML `<summary>` is always multi-line: opening tag, body line(s), closing tag. Never one-line summary.
-
-Document public types and members with `<summary>`. Add comments for implicit / non-obvious logic (why, edge case, order dependency). Do not narrate the obvious line-by-line. No filler `<param>`.
-
-```csharp
-/// <summary>
-/// Null означает сгенерировать id из исходного файла.
-/// </summary>
-public string? PhotoId { get; }
-
-// Сначала стадии: иначе Page.AddStage нарушит инвариант порядка
-foreach (var stage in ordered)
-    page.AddStage(stage);
-```
+Write comments and XML documentation in Russian. Use English identifiers.
+Apply the three-line XML summary rule in the Domain layer (see `domain/summaries.mdc`). In Application, Api, Domain.Data and other layers, document a member when it needs an explanation.
+Use implementation comments to explain an ordering constraint, an invariant or a surprising case.

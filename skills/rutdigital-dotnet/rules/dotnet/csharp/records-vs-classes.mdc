@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Records vs classes
 
-- `record`: MediatR commands/queries, simple GraphQL inputs.
+- `record`: mediator commands and queries, simple GraphQL inputs.
 - `class`: handlers, gRPC adapters, entities, EF configs, GraphQL extensions, mappers, DataLoaders.
 
 ```csharp

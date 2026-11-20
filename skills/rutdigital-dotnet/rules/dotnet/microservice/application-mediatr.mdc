@@ -1,22 +1,15 @@
 ---
-description: MediatR handlers and ApplicationSetting
+description: Structure Application commands and queries with their handlers and register the service's mediator
 globs:
   - "**/Application/**/*.cs"
-  - "**/*ApplicationSetting.cs"
+  - "**/*.Application/**/*.cs"
 alwaysApply: false
 ---
 
-# Application MediatR
+# Application operations
 
-- Multiple features: `Commands/<Feature>/`, `Queries/<Feature>/`.
-- One public type per file; command `record` and handler in separate files when either is more than a few lines.
-- `AddApplication()` registers scoped mapper + MediatR from the Application assembly.
-
-```csharp
-public static IServiceCollection AddApplication(this IServiceCollection services)
-{
-    services.AddScoped<IMapper, Mapper>();
-    services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(ApplicationSetting).Assembly));
-    return services;
-}
-```
+- Keep one use case per file. Put the request `record` and its `sealed` handler together. Name the file after the operation, the handler `<Operation>Handler`, and the operation after the action or data requested.
+- Group commands by feature under `Commands/`. Put reads in `Queries/` and group related queries when needed.
+- Use primary constructor injection for the dependencies the handler uses. Name the request parameter `command` or `query`. Forward `cancellationToken` through every async database or service call.
+- With the `Mediator` package, use `IRequest<TResponse>`, `IRequestHandler<TRequest, TResponse>` and `ValueTask<TResponse> Handle(...)`. Wrap the generated request if it carries input. An operation with no input can use a parameterless record.
+- Register handlers for the Application assembly in `AddApplication()` using the project's mediator package. For source-generated Mediator use `AddMediator` with the Application assembly. Preserve the installed library in existing services.
