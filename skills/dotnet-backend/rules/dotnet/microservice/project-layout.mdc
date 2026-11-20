@@ -1,15 +1,18 @@
 ---
-description: Four-project microservice solution layout
+description: Set up the service solution for Rider and align its .NET SDK
 globs:
   - "**/*.csproj"
-  - "**/*.sln"
+  - "**/*.slnx"
+  - "**/global.json"
   - "**/Program.cs"
 alwaysApply: false
 ---
 
 # Microservice layout
 
-Four projects: `{Api, Application, Domain, Domain.Data}`.
+Give each service its own `.slnx` for Rider. Include its Api, Application, Domain and Domain.Data projects and any contracts or test projects it owns. Resolve project paths relative to the solution file.
+
+Use the SDK version agreed for the workspace in each applicable `global.json`. When it changes, align the pins in the affected repositories. From each solution directory, check `dotnet --version`, list its projects with `dotnet sln <service>.slnx list` and build that solution.
 
 gRPC adapter → mediator → handler → EF/domain. No REST. No Hangfire. No `Infrastructure` — persistence is `Domain.Data`.
 

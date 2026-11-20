@@ -9,7 +9,7 @@ alwaysApply: false
 
 # SaveChanges
 
-- Use the DbContext registered for the service and save asynchronously.
+- Stage all entity changes and Outbox entries in the same DbContext. Finish a mutating command with one awaited `SaveChangesAsync(cancellationToken)`. Do not open or commit a transaction in the handler or wrap it in a transaction helper. Reads and unchanged replays need no save.
 - When persistence interceptors own audit fields or version increments, let them supply those values. Keep domain-specific version checks on the model that owns the invariant.
 
 ```csharp

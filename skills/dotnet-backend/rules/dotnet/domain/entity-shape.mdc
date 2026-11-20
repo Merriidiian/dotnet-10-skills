@@ -9,7 +9,13 @@ alwaysApply: false
 # Entity shape
 
 Use the Common base from `entity-or-vo.mdc` in the signature supported by the installed package. Use the non-generic `MutableEntity` when that is the service's base for a Guid key.
-Keep mapped setters private by default. Use a private parameterless constructor when EF materialization requires it.
+Keep mapped setters private by default. Place the main constructor first in the class body, followed immediately by the private parameterless EF constructor when needed, then other members. Write an empty EF constructor on one line, such as `private Document() { }`, without an XML summary.
 Expose named operations for state changes. Validate the complete candidate state before mutating fields, versions or collections. Reuse the same validation path for creation and edits when they share invariants.
 Copy an incoming mutable collection before retaining it. Keep entity collections in a private list and expose a read-only view.
 For EF-mapped primitive ID lists, follow the collection mapping already used by the service.
+
+Model editable business fields and any required submission snapshot with named domain types. Keep serialization in the transport or persistence mapping so the aggregate can validate its data directly.
+
+When the persistence layer generates the primary key, let it assign the ID. Omit manual `Id = Guid.NewGuid()` assignments for such keys. With an EF client-side key generator, track the new principal before using its ID in dependent records. With a database-generated key, use the relationship or read the key after saving.
+
+Represent a stored file with the shared `FileBinding` containing the file ID issued by s3-storage. Each binding has one owner. Persist the binding and its business role. Read the original filename and byte length from storage by file ID when constructing a response or checking a quota. File checksums belong to storage. Omit SHA-256 from the material API. Identical bytes can be uploaded as distinct attachments; use a request identifier when the operation requires retry deduplication. Keep file metadata out of the consumer’s tables and submission snapshots. Use the storage contract for signed transfers and the shared persistence lifecycle to enqueue attachment and release events with the business change.

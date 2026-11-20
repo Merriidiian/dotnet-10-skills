@@ -11,3 +11,5 @@ Make the use case readable from top to bottom. Name local variables after the do
 Do not add layers, patterns, generics, or shared helpers for a one-off. Prefer direct code in the feature that needs it.
 
 Small diffs. No speculative types “for later”.
+
+Use classes and records without the `sealed` modifier. Separate logical steps with a blank line. In complex business operations, use a short comment in everyday language to explain why the order or decision matters.

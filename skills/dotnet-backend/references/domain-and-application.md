@@ -12,7 +12,7 @@
 /// <summary>
 /// Заголовок документа.
 /// </summary>
-public sealed class DocumentTitle : ValueObject
+public class DocumentTitle : ValueObject
 {
     /// <summary>
     /// Создаёт заголовок из непустого текста.
@@ -48,17 +48,14 @@ public sealed class DocumentTitle : ValueObject
 /// <summary>
 /// Документ с редактируемым заголовком.
 /// </summary>
-public sealed class Document : MutableEntity
+public class Document : MutableEntity
 {
-    /// <summary>
-    /// Создаёт экземпляр для восстановления документа из хранилища.
-    /// </summary>
-    private Document() { }
-
     /// <summary>
     /// Создаёт документ с заданным заголовком.
     /// </summary>
     public Document(string title) => Rename(title);
+
+    private Document() { }
 
     /// <summary>
     /// Текущий заголовок документа.
@@ -78,12 +75,12 @@ public sealed class Document : MutableEntity
 
 ```csharp
 public record RenameDocument(Contracts.RenameDocumentRequest Request)
-    : IRequest<Contracts.Document>;
+    : IRequest<Contracts.RenameDocumentResponse>;
 
-public sealed class RenameDocumentHandler(DocumentDbContext context, IMapper mapper)
-    : IRequestHandler<RenameDocument, Contracts.Document>
+public class RenameDocumentHandler(DocumentDbContext context, IMapper mapper)
+    : IRequestHandler<RenameDocument, Contracts.RenameDocumentResponse>
 {
-    public async ValueTask<Contracts.Document> Handle(
+    public async ValueTask<Contracts.RenameDocumentResponse> Handle(
         RenameDocument command, CancellationToken cancellationToken)
     {
         var request = command.Request;
@@ -97,7 +94,7 @@ public sealed class RenameDocumentHandler(DocumentDbContext context, IMapper map
         document.Rename(request.Title);
         await context.SaveChangesAsync(cancellationToken);
 
-        return mapper.Map(document);
+        return new Contracts.RenameDocumentResponse { Document = mapper.Map(document) };
     }
 }
 ```

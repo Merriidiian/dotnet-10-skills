@@ -13,16 +13,26 @@ Map backing fields, owned types, and FKs in `IEntityTypeConfiguration<T>` under 
 Keys, indexes, ignores, and jsonb conversions. Do not set `HasMaxLength` or `HasColumnType` on strings. Do not set `HasColumnName`.
 
 ```csharp
-builder.Navigation(e => e.Stages)
+builder
+    .Navigation(e => e.Stages)
     .HasField("_stages")
     .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-builder.HasMany(e => e.Stages)
+builder
+    .HasMany(e => e.Stages)
     .WithOne()
     .HasForeignKey(s => s.PageId);
 
-builder.OwnsOne(e => e.Options, owned =>
+builder
+    .OwnsOne(e => e.Options, owned =>
 {
-    owned.Property(x => x.Flag);
+    owned
+        .Property(x => x.Flag);
 });
+```
+
+Keep Domain.Data focused on persistence. Express business eligibility, including status-dependent rules, in the domain operation. Avoid embedding eligibility checks such as `HasFilter("status = 0")` in EF mappings. Protect competing writes with a unique key, concurrency token or database lock, and verify the result with concurrent requests. Keep relationship keys and structural unique indexes in the model. Put each fluent call on its own line, starting with the builder on a separate line.
+
+```csharp
+public DbSet<Document> Documents { get; set; }
 ```

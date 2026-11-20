@@ -9,7 +9,9 @@ alwaysApply: false
 Do not write `reserved`. Leave unused numbers unused. Append new tags.
 
 ```protobuf
+// Данные новой страницы
 message CreatePageRequest {
+  // Страница для сохранения
   Page page = 1;
 }
 ```

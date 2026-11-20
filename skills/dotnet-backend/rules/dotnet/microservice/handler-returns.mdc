@@ -17,7 +17,7 @@ Keep business invariants on the domain model. The handler coordinates storage, m
 ```csharp
 public record GetCatalogItems : IRequest<Contracts.GetCatalogItemsResponse>;
 
-public sealed class GetCatalogItemsHandler(CatalogDbContext context, IMapper mapper)
+public class GetCatalogItemsHandler(CatalogDbContext context, IMapper mapper)
     : IRequestHandler<GetCatalogItems, Contracts.GetCatalogItemsResponse>
 {
     public async ValueTask<Contracts.GetCatalogItemsResponse> Handle(

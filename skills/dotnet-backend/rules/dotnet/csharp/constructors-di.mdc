@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Constructors and DI
 
-Primary constructors for DI. Inject only what the type uses.
+Primary constructors for DI. Inject only what the type uses. Place the main constructor first in the class body, followed immediately by the private parameterless EF constructor when needed, then other members. Write an empty EF constructor on one line, such as `private Document() { }`, without an XML summary.
 
 ```csharp
 public class CreatePageHandler(AppDbContext context, IMapper mapper)

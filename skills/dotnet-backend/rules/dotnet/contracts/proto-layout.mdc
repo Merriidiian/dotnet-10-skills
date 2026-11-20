@@ -17,3 +17,5 @@ package product.domain;
 import "product/domain/models.proto";
 import "google/protobuf/timestamp.proto";
 ```
+
+Format every message as a multiline block, including empty messages. Put each field on its own line below its summary. Use the same layout inside a oneof.

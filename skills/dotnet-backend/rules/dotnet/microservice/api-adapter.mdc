@@ -11,4 +11,9 @@ alwaysApply: false
 
 Override the generated gRPC service method, construct the Application command or query, and send it with `context.CancellationToken`. Keep persistence and domain decisions in the owning layers.
 
-For a single forwarding call, return the mediator result in the type required by the transport. Use `.AsTask()` to adapt a `ValueTask<T>` to a gRPC `Task<T>`. Event handlers forward the incoming event and its cancellation token to the matching command.
+Declare forwarding gRPC overrides and asynchronous event handlers with `async`. Await the mediator and propagate the cancellation token. For a gRPC method that only sends a command or query, use an expression body. Put `=>` at the end of the signature and the awaited call on the next line.
+
+```csharp
+public override async Task<CloseProjectResponse> CloseProject(CloseProjectRequest request, ServerCallContext context) =>
+    await mediator.Send(new CloseProject(request), context.CancellationToken);
+```

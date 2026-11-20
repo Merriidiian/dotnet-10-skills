@@ -8,4 +8,4 @@ alwaysApply: false
 
 Pass the request cancellation token from gRPC or GraphQL through the mediator into EF and downstream service calls.
 
-Await the operation when the method processes its result, performs subsequent work or handles errors around the asynchronous call. A forwarding method can return a compatible task directly. A gRPC override that only forwards a Mediator `ValueTask<T>` can return `Send(...).AsTask()`.
+Use `async` and `await` throughout asynchronous call chains, including forwarding methods. Pass the token to database, network and stream operations. Keep in-memory calculations synchronous.

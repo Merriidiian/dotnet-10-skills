@@ -8,7 +8,7 @@ alwaysApply: false
 
 # Domain summaries
 
-Document each class, field, property, constructor and method declared in Domain, regardless of visibility. Include private backing fields, helper methods and overrides. Document each domain enum and each enum member in the same form.
+Document each class, field, property, constructor and method declared in Domain, except for the empty private parameterless EF constructor. Write that constructor on one line without a summary. Include private backing fields, helper methods and overrides. Document each domain enum and each enum member in the same form.
 
 Use exactly three lines per summary. Put the opening tag, one short Russian sentence or phrase, and the closing tag on separate lines. Describe what the value means or what the operation does in the domain.
 

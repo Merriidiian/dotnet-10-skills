@@ -1,14 +1,12 @@
 ---
-description: Comment proto RPCs and fields in spoken Russian, no trailing period. Use when writing or editing .proto files.
+description: Comment proto messages, RPCs and fields in spoken Russian, no trailing period. Use when writing or editing .proto files.
 globs: "**/*.proto"
 alwaysApply: false
 ---
 
 # Proto comments
 
-Comment every `rpc` and field. Russian, spoken language. No trailing period.
-
-Do not comment a message just to say «запрос» / «ответ». Keep a message comment only for a pitfall.
+Place a short Russian summary immediately above every `message`, `rpc` and field, including oneof alternatives and empty request or response messages. Describe the action, result or meaning of the value. Use everyday language and omit the trailing period.
 
 Do not strip neighboring comments to “clean up” a file. The C# “do not restate the member” rule does not apply here.
 
@@ -16,6 +14,7 @@ Do not strip neighboring comments to “clean up” a file. The C# “do not res
 // Создаёт страницу
 rpc CreatePage (CreatePageRequest) returns (CreatePageResponse);
 
+// Данные для создания страницы
 message CreatePageRequest {
   // Страница
   Page page = 1;

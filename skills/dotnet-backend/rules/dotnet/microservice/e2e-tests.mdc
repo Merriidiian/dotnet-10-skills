@@ -1,0 +1,16 @@
+---
+description: Design end-to-end tests for a backend service from its business requirements
+globs:
+  - "**/tests/**/*.cs"
+  - "**/*Tests/**/*.cs"
+alwaysApply: false
+---
+
+# Service E2E tests
+
+Write only end-to-end tests for backend services. Select scenarios for each service from its business requirements. Shared libraries under `common` follow their own testing conventions, including unit and integration tests.
+
+- Start at the entry point used by the caller, such as a gateway route, a gRPC method or a broker message. Exercise the service and the dependencies that implement the business rule.
+- Verify the observable outcome. Include rejections, retries or concurrent requests when they change what the business rule guarantees. Read back persisted state or check the effect at the event consumer when that is part of the outcome.
+
+Example: given two pending invitations and one team place per participant, accept both invitations concurrently through the API. Check both responses and retrieve both teams. Exactly one team must contain the participant.

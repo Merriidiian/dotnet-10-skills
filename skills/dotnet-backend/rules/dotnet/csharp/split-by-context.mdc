@@ -8,8 +8,10 @@ alwaysApply: false
 
 Organize so each folder, file, and method has one clear context.
 
+- Organize Domain folders and namespaces by the business concept that owns the behavior. Keep its entities, value objects and enums together. For example, place `Order.cs`, `OrderLine.cs` and `OrderStatus.cs` in `Orders/`.
+- Use the domain vocabulary agreed with the team. Give each domain type and its file the same name, including an existing reference model's name when it represents the same concept.
 - Group commands by feature. Reads go under `Queries/`, optionally grouped by feature.
-- Methods do one job; extract a private method when a block has its own meaning.
+- Keep one business action and its checks together. A one-line status guard used by a single action belongs in that action. Extract a named policy when multiple operations share the decision.
 - Keep the Application request and handler together as one use case. Extract a focused query or lookup when multiple operations actually share it.
 
 Do not invent extra layers for this — only clear placement by context.

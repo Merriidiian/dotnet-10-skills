@@ -8,26 +8,26 @@ alwaysApply: false
 
 # Domain enums
 
-Place each enum in its own `Enums/<Name>.cs` under Domain. Use a file-scoped namespace ending in `.Domain.Enums` and PascalCase names.
+Keep each enum in its own PascalCase file beside the model that uses it, for example `Orders/OrderStatus.cs`. Match the file-scoped namespace to that business area.
 Assign each member an explicit integer. For a new sequence, start at zero with the appropriate initial value. Preserve assigned numbers when a stored or published enum evolves.
 Use three-line Russian summaries on the type and each member. Separate members with a blank line and keep the trailing comma.
 
 ```csharp
-namespace Catalog.Domain.Enums;
+namespace Catalog.Domain.Orders;
 
 /// <summary>
-/// Состояние каталога.
+/// Состояние заказа.
 /// </summary>
-public enum CatalogState
+public enum OrderStatus
 {
     /// <summary>
-    /// Подготовка к публикации.
+    /// Черновик заказа.
     /// </summary>
     Draft = 0,
 
     /// <summary>
-    /// Каталог опубликован.
+    /// Заказ принят.
     /// </summary>
-    Published = 1,
+    Accepted = 1,
 }
 ```

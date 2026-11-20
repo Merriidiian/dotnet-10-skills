@@ -16,7 +16,7 @@ Enforce invariants in domain methods with `InvalidInputError`. Do not expose the
 /// <summary>
 /// Добавляет этап в коллекцию страницы.
 /// </summary>
-private void AddStage(PageStage stage)
+public void AddStage(PageStage stage)
 {
     if (_stages.Any(s => s.Stage == stage.Stage))
         throw new InvalidInputError("Этап уже добавлен");
@@ -25,3 +25,5 @@ private void AddStage(PageStage stage)
     _stages.Add(stage);
 }
 ```
+
+Group the checks for a business action inside its named operation. For example, answering an invitation checks the current status and applies the answer together. Extract a separate policy when several operations genuinely share the decision.
