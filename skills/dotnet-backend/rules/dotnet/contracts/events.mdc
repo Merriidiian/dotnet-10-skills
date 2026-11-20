@@ -1,13 +1,13 @@
 ---
-description: Integration events in the contracts repo
-globs: "**/Events/**/*.cs"
+description: Define broker event contracts for service-owned queues and downstream subscribers
+globs:
+  - "**/*.proto"
+  - "**/EventsHandlers/**/*.cs"
 alwaysApply: false
 ---
 
-# Events
+# Broker event contracts
 
-`record` under `Events/<Context>/`. Inherit `Event`. CLR type name is the routing identity.
+Define a Protobuf message in the producing service’s contracts. Keep its full Protobuf name and existing field numbers stable. Bind each consumer queue to the event's routing key using the installed messaging library. Multiple subscribers, including the producer itself, each have their own logical queue. Replicas of the same subscriber share that queue.
 
-```csharp
-public record FileUploadedEvent(string FileId) : Event;
-```
+Include the data the consumer must observe as of the change. Use the envelope's event ID for deduplication across redeliveries.

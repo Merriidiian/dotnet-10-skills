@@ -16,7 +16,7 @@ alwaysApply: false
 
 - Stage all entity changes and Outbox entries in the same DbContext. Finish a mutating command with one awaited `SaveChangesAsync(cancellationToken)`. Do not open or commit a transaction in the handler or wrap it in a transaction helper. Reads and unchanged replays need no save.
 
-Route incoming RPCs and broker messages through Mediator. Each handler coordinates I/O for its operation and calls the aggregate. Put decisions in entities and value objects. Use domain events for reactions to a transition. Keep separate operations in their own handlers instead of grouping them in a service class.
+Route incoming RPCs and broker messages through Mediator. Each handler coordinates I/O for its operation and calls the aggregate. Put decisions in entities and value objects. For an asynchronous reaction within the same service, stage a Protobuf event in the Outbox and consume it through a dedicated RabbitMQ queue and Inbox. Mediator runs the application handler after delivery. Keep separate operations in their own handlers instead of grouping them in a service class.
 
 Use the version of the owning `MutableEntity` to detect competing decisions. Protect first creation with a unique business key. If different aggregates compete for the same resource, every allocation must update the same versioned owner or satisfy the same database uniqueness constraint. Avoid session-scoped database locks in handlers.
 

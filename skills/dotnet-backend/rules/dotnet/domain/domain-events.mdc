@@ -1,9 +1,14 @@
 ---
-description: In-process domain events on Entity
-globs: "**/*.Domain/**/*.cs"
+description: Deliver asynchronous reactions within the same service through RabbitMQ and an inbox
+globs:
+  - "**/*.Domain/**/*.cs"
+  - "**/*.Application/**/*.cs"
+  - "**/*.Api/**/*.cs"
 alwaysApply: false
 ---
 
-# Domain events
+# Events consumed by their producer
 
-Record a domain event on the aggregate when another part of the same domain must react to a change. Dispatch using the unit of work configured by the service. Establish whether handlers run inside the transaction or after commit before relying on their effects. For cross-service delivery, use an integration event and the transactional outbox.
+The aggregate changes state and enforces its rules synchronously. When the service needs a separate reaction, the command handler stages a Protobuf event in its Outbox and saves it together with that change. Use the broker for this path even when the producer and consumer are the same service. Avoid `AddDomainEvent` and in-process `INotification` dispatch.
+
+For example, a service that records a booking and then sends a confirmation can publish `BookingRecorded` and bind its own queue to that event type. After commit the relay delivers it through RabbitMQ. The consumer uses the service's Inbox and calls a Mediator handler. Stage the reaction and the Inbox receipt in one unit of work. A replay of the same envelope must produce one confirmation. Bind the queue to the input event type so an outgoing confirmation cannot trigger the same handler again.
