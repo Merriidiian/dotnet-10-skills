@@ -10,8 +10,8 @@ alwaysApply: false
 
 Every Domain class derives from the service's Common `MutableEntity`, `Entity` or `ValueObject` base.
 
-- Use `MutableEntity` for an entity with identity and an editable lifecycle that uses modification tracking or versioning.
-- Use `Entity` for an identified record such as a publication with its own creation audit.
+- Use `MutableEntity` for a record with identity whose persisted state can change, including a local projection updated by incoming events. Let the versioned DbContext check the original version and assign the next version when it saves a change.
+- Use `Entity` for an identified record written once, such as an issued receipt. Use a separate source revision when applying snapshots from another service. Compare snapshots for the same source object and keep the newest one. The local entity version protects the write to this service's database.
 - Use `ValueObject` for a value defined by its attributes. In `GetEqualityComponents()`, yield all components that determine equality.
 
 Keep validation on the entity or value object that owns the rule. Put request DTOs, query helpers and mappers in their respective layers.

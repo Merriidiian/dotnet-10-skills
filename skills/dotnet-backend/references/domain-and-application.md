@@ -2,7 +2,7 @@
 
 У документа есть идентичность. При переименовании она сохраняется. Заголовок определяется своим текстом. Так выбираются базовые типы двух классов.
 
-Для адаптации замени `Document` на свой агрегат, `DocumentTitle` — на проверяемое значение, `RenameDocument` — на бизнес-действие. Базовые типы домена, ошибки, контекст EF, контракты и маппер предоставляет целевой проект. Вход в этом шаблоне — идентификатор и новый заголовок. При недопустимом значении старый заголовок сохраняется. При успешной записи клиент получает обновлённый документ.
+Для адаптации замени `Document` на свой агрегат, `DocumentTitle` — на проверяемое значение, `RenameDocument` — на бизнес-действие. Базовые типы домена, ошибки, контекст EF, контракты и маппер предоставляет целевой проект. Клиент передаёт идентификатор документа, версию, которую прочитал, и новый заголовок. При недопустимом значении старый заголовок сохраняется. При успешной записи клиент получает обновлённый документ.
 
 ## Объект-значение
 
@@ -53,7 +53,7 @@ public class Document : MutableEntity
     /// <summary>
     /// Создаёт документ с заданным заголовком.
     /// </summary>
-    public Document(string title) => Rename(title);
+    public Document(string title) => Title = new DocumentTitle(title);
 
     private Document() { }
 
@@ -65,13 +65,19 @@ public class Document : MutableEntity
     /// <summary>
     /// Присваивает документу новый заголовок.
     /// </summary>
-    public void Rename(string title) => Title = new DocumentTitle(title);
+    public void Rename(string title, long expectedVersion)
+    {
+        if (Version != expectedVersion)
+            throw new ConcurrencyError(new InvalidOperationException("Версия документа изменилась."));
+
+        Title = new DocumentTitle(title);
+    }
 }
 ```
 
 ## Команда Application
 
-В файле `RenameDocument.cs` находятся запрос и обработчик. Входной контракт передаёт строковый идентификатор и новый заголовок. Контракт ответа формирует маппер после успешной записи.
+В файле `RenameDocument.cs` находятся команда и обработчик. Если клиент открыл старую редакцию, домен возвращает конфликт. Если документ изменится между чтением в обработчике и записью, конфликт обнаружит общий версионируемый DbContext при сохранении. Маппер вернёт клиенту сохранённую версию.
 
 ```csharp
 public record RenameDocument(Contracts.RenameDocumentRequest Request)
@@ -91,7 +97,7 @@ public class RenameDocumentHandler(DocumentDbContext context, IMapper mapper)
             .SingleOrDefaultAsync(item => item.Id == id, cancellationToken)
             ?? throw new NotFoundError<Document>(id);
 
-        document.Rename(request.Title);
+        document.Rename(request.Title, request.ExpectedVersion);
         await context.SaveChangesAsync(cancellationToken);
 
         return new Contracts.RenameDocumentResponse { Document = mapper.Map(document) };

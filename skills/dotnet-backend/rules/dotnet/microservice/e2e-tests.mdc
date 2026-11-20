@@ -14,3 +14,5 @@ Write only end-to-end tests for backend services. Select scenarios for each serv
 - Verify the observable outcome. Include rejections, retries or concurrent requests when they change what the business rule guarantees. Read back persisted state or check the effect at the event consumer when that is part of the outcome.
 
 Example: a service promises idempotent creation. Send the same request twice through the API, check both responses and read back the records. Both responses must identify the same record and only one record should exist.
+
+For a versioned edit, send two different changes based on the same version through independent requests. Check that one succeeds, the other receives a conflict, and a fresh read returns the winner's data. When different aggregates compete for the same resource, use distinct commands and check the final allocation. For a snapshot consumer, deliver a newer snapshot followed by an older one and verify that a fresh read still returns the newer state.
