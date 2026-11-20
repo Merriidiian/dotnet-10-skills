@@ -1,0 +1,17 @@
+---
+description: Bind and validate config in Program.cs
+globs: "**/Program.cs"
+alwaysApply: false
+---
+
+# Configuration binding
+
+Bind and validate the sections the service requires at startup. Inject the resulting options into the components that use them. Here, `StorageOptions` is the service's options type and `Endpoint` is a required URI string.
+
+```csharp
+builder.Services.AddOptions<StorageOptions>()
+    .Bind(builder.Configuration.GetRequiredSection("Storage"))
+    .Validate(options => Uri.TryCreate(options.Endpoint, UriKind.Absolute, out _),
+        "Укажите полный адрес хранилища.")
+    .ValidateOnStart();
+```

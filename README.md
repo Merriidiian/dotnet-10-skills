@@ -1,7 +1,5 @@
-# dotnet-10-skills
+# Соглашения для .NET 10
 
-[Навык Codex для .NET 10](skills/rutdigital-dotnet/SKILL.md) применяет пользовательские соглашения RutDigital. [Полные тексты правил](skills/rutdigital-dotnet/rules/dotnet) входят в репозиторий.
+[Навык для Codex](skills/dotnet-backend/SKILL.md) содержит правила разработки и ревью C#-бэкендов. В [шаблоне Domain и Application](skills/dotnet-backend/references/domain-and-application.md) одна операция показана от проверки значения до сохранения и формирования ответа. [Тематические правила](skills/dotnet-backend/rules/dotnet) охватывают также gRPC, GraphQL, Protobuf и EF Core.
 
-Чтобы подключить навык, скопируй каталог `skills/rutdigital-dotnet` целиком в `~/.codex/skills/`. В чате его можно вызвать по имени `$rutdigital-dotnet`.
-
-Исходная ревизия правил — `6c93073f4c52c65e0a8f6b66d81b2d9ec1fe2c5d` из ветки `master` репозитория `rutdigital/ai-agents/rutdigital-code-agents`, каталог `rules/dotnet`.
+Для установки скопируй каталог `skills/dotnet-backend` целиком в `~/.codex/skills/`. Имя для явного вызова в чате — `$dotnet-backend`.

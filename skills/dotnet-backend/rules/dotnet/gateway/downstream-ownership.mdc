@@ -1,0 +1,20 @@
+---
+description: Route gateway fields to the downstream service that owns the requested data
+globs:
+  - "**/Schema/**/*.cs"
+  - "**/DataLoaders/**/*.cs"
+  - "**/*Grpc*.cs"
+alwaysApply: false
+---
+
+# Downstream ownership
+
+Use the contract of the service that owns the field. For example, a catalog owns item details and an audit service owns the item’s activity history. Inject the corresponding generated client at each resolver.
+
+```csharp
+var history = await auditClient.GetItemHistoryAsync(
+    new GetItemHistoryRequest { ItemId = itemId },
+    cancellationToken: cancellationToken);
+```
+
+Replace the client, request and identifier with the owning service’s contract. Apply the caller’s permissions when exposing its response.

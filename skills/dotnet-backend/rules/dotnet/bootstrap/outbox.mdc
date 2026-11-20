@@ -1,0 +1,14 @@
+---
+description: Publish integration events through IEventPublisher
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+# Outbox
+
+Use a transactional outbox for an event that describes a database change. In the template, `eventPublisher.PublishAsync` stages an outbox record in the same unit of work as the aggregate. The save commits both records. A relay handles delivery after commit. Verify these semantics for the publisher installed in the target project.
+
+```csharp
+await eventPublisher.PublishAsync(new FileUploadedEvent(fileId), cancellationToken);
+await dbContext.SaveChangesAsync(cancellationToken);
+```

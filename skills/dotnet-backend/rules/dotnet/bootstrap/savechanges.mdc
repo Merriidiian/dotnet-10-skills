@@ -1,0 +1,17 @@
+---
+description: Persist changes through the service DbContext and forward cancellation
+globs:
+  - "**/*DbContext.cs"
+  - "**/Application/**/*.cs"
+  - "**/Domain.Data/**/*.cs"
+alwaysApply: false
+---
+
+# SaveChanges
+
+- Use the DbContext registered for the service and save asynchronously.
+- When persistence interceptors own audit fields or version increments, let them supply those values. Keep domain-specific version checks on the model that owns the invariant.
+
+```csharp
+await context.SaveChangesAsync(cancellationToken);
+```

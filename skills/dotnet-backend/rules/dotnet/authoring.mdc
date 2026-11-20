@@ -1,0 +1,15 @@
+---
+description: How to write Cursor rules. Use when editing .mdc files or capturing style feedback.
+globs: "**/rules/dotnet/**/*.mdc"
+alwaysApply: false
+---
+
+# Writing rules
+
+- One concern. `rules/dotnet/<area>/<concern>.mdc`. Areas: `csharp`, `errors`, `contracts`, `bootstrap`, `microservice`, `domain`, `gateway`.
+- Under 40 lines. English. `description` = WHAT + WHEN.
+- State the required shape. Do not argue from a specific service.
+- Use a self-contained template with neutral names. Introduce the inputs, show the operation and state the expected result. Identify dependencies the reader supplies.
+- Keep source repositories, branches, commit IDs, implementation links and internal service names out of reusable rules. Use actual framework identifiers where the API matters.
+- Short bullets + one template. No filler. No BAD examples.
+- `alwaysApply: true` only for `00-core` and `00-stack`. `00-gitignore` is glob-scoped to `.gitignore`. Split past 50 lines except `00-gitignore`. Do not dump into `00-core`.

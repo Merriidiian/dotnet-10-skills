@@ -1,0 +1,16 @@
+---
+description: Extend existing GraphQL query, mutation and subscription roots
+globs: "**/Schema/Types/**/*.cs"
+alwaysApply: false
+---
+
+# Extend roots
+
+Extend the root already registered by the gateway. In this template, `Query` is the host’s existing GraphQL query root.
+
+```csharp
+[ExtendObjectType(typeof(Query))]
+public class ItemQuery
+{
+}
+```

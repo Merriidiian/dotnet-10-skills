@@ -1,0 +1,21 @@
+---
+description: Register generated downstream clients and configure their endpoints at startup
+globs:
+  - "**/Program.cs"
+  - "**/*Grpc*.cs"
+alwaysApply: false
+---
+
+# Downstream gRPC clients
+
+Register a typed client for each downstream contract the service calls. Resolve the endpoint from configuration. Use the project's shared registration extension when it supplies transport defaults. Set deadlines from the request budget and retry only calls with suitable semantics.
+
+The template uses a generated catalog client. Substitute your generated client type and configuration key.
+
+```csharp
+var endpoint = builder.Configuration["Services:Catalog:Address"]
+    ?? throw new InvalidOperationException("Укажите адрес сервиса каталога.");
+
+builder.Services.AddGrpcClient<Catalog.CatalogClient>(options =>
+    options.Address = new Uri(endpoint, UriKind.Absolute));
+```

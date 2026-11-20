@@ -1,0 +1,15 @@
+---
+description: Reuse the registered sorting enum in GraphQL. Use when adding sort inputs or paging enums on a gateway.
+globs:
+  - "**/Schema/Types/**/*.cs"
+  - "**/GraphQLConfig.cs"
+alwaysApply: false
+---
+
+# GraphQL SortDirection
+
+Reuse the sorting enum exposed by the registered paging or schema package. In the template, `SortDirection` stands for that existing type.
+
+```csharp
+public record ItemSortInput(SortDirection? Name);
+```

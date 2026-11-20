@@ -1,0 +1,20 @@
+---
+description: Gateway middleware pipeline order
+globs: "**/Program.cs"
+alwaysApply: false
+---
+
+# Gateway pipeline
+
+Register request middleware in dependency order. Run routing before policies that depend on endpoint metadata. Authenticate the caller before evaluating authorization. Then map the endpoints used by the gateway.
+
+For an ASP.NET Core gateway using YARP and a named authorization policy:
+
+```csharp
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapReverseProxy().RequireAuthorization("GatewayAccess");
+```
+
+Register the proxy, authentication scheme and policy during startup. Add GraphQL or WebSocket support when the gateway exposes those protocols.

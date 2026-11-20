@@ -1,0 +1,9 @@
+---
+description: In-process domain events on Entity
+globs: "**/*.Domain/**/*.cs"
+alwaysApply: false
+---
+
+# Domain events
+
+Record a domain event on the aggregate when another part of the same domain must react to a change. Dispatch using the unit of work configured by the service. Establish whether handlers run inside the transaction or after commit before relying on their effects. For cross-service delivery, use an integration event and the transactional outbox.

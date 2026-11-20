@@ -1,0 +1,20 @@
+---
+description: Pin compatible CI and Helm dependencies when updating deployment configuration
+globs:
+  - "**/.gitlab-ci.yml"
+  - "**/chart/**"
+alwaysApply: false
+---
+
+# CI and chart versions
+
+When a pipeline includes a shared template, select a release compatible with the service's chart. Keep environment-specific values in the project that owns the deployment. Change only the values required by the upgrade.
+
+Replace each bracketed field with the CI project, include file and release selected for this deployment.
+
+```yaml
+include:
+  - project: "<ci-template-project>"
+    file: "<pipeline-file>"
+    ref: "<compatible-release>"
+```

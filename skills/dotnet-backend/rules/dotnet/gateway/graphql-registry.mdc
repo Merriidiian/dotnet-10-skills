@@ -1,0 +1,14 @@
+---
+description: Explicit GraphQLConfig registration, no discovery
+globs: "**/GraphQLConfig.cs"
+alwaysApply: false
+---
+
+# GraphQL registry
+
+Register extensions, union members, DataLoaders and the gateway’s existing error filter in its schema configuration. Substitute the types below with the feature’s schema types.
+
+```csharp
+schema.AddTypeExtension<CatalogQueries>()
+    .AddDataLoader<ItemByIdLoader>();
+```

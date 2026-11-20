@@ -1,0 +1,23 @@
+---
+description: Configure a gRPC service and its HTTP/2 listener in the host
+globs:
+  - "**/Program.cs"
+  - "**/*ApplicationSetting.cs"
+alwaysApply: false
+---
+
+# gRPC host
+
+Read listener settings from the deployment configuration. Register the application handlers and map the service implementation in the host. When the platform provides a host extension, supply the same settings through that extension.
+
+This template shows the composition root for a service whose HTTP/2 endpoint and TLS settings are configured under `Kestrel:Endpoints`. Substitute the application registration and the generated-base implementation for your service.
+
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddGrpc();
+builder.Services.AddApplication();
+
+var app = builder.Build();
+app.MapGrpcService<CatalogEndpoint>();
+await app.RunAsync();
+```

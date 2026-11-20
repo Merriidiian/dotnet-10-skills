@@ -1,0 +1,33 @@
+---
+description: Protobuf RPC and field naming, stable tags
+globs: "**/*.proto"
+alwaysApply: false
+---
+
+# Proto names and tags
+
+- RPC: `VerbNoun`. Messages: `VerbNounRequest` / `VerbNounResponse`.
+- Fields: `snake_case`.
+- Append new field numbers. Never reuse or renumber.
+- Choose the C# namespace from the published contract package and bounded context. Keep it stable across files in that contract.
+
+```protobuf
+syntax = "proto3";
+package catalog.v1;
+option csharp_namespace = "Catalog.Contracts.V1";
+
+service Catalog {
+  // Создаёт запись
+  rpc CreateItem (CreateItemRequest) returns (CreateItemResponse);
+}
+
+message CreateItemRequest {
+  // Название записи
+  string name = 1;
+}
+
+message CreateItemResponse {
+  // Идентификатор записи
+  string id = 1;
+}
+```

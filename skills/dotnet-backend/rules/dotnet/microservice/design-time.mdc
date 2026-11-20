@@ -1,0 +1,16 @@
+---
+description: EF tools use the Api host. Use when adding DbContext, migrations, or a design-time factory.
+globs:
+  - "**/Program.cs"
+  - "**/*DbContext*.cs"
+  - "**/Domain.Data/**/*.cs"
+alwaysApply: false
+---
+
+# Design-time DbContext
+
+Point EF tools to the project that owns migrations and the startup project that configures the DbContext. For the common split between the persistence and API projects, adapt this invocation to the solution layout.
+
+```sh
+dotnet ef migrations add AddItemIndex --project path/to/persistence --startup-project path/to/api
+```

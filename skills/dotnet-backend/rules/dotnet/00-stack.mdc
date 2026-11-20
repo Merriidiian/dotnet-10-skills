@@ -1,0 +1,13 @@
+---
+description: Detect gateway vs microservice vs contracts from the repo
+alwaysApply: true
+---
+
+# Stack
+
+Detect from the repo, then follow the matching glob rules under `rules/dotnet/`:
+
+- Gateway routes forward external requests to service contracts. Apply GraphQL-specific rules where the host registers a GraphQL schema. Business persistence belongs to the owning service.
+- A host that maps generated gRPC services is a gRPC microservice. Follow the service’s existing Api, Application, Domain and persistence boundaries.
+- `protos/` + `Events/` → contracts. Search here before any cross-service DTO.
+- Not a .NET backend → ignore dotnet rules.
