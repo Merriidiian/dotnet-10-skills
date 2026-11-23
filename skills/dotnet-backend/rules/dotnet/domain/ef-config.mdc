@@ -2,13 +2,14 @@
 description: EF Core fluent config and backing fields in Domain.Data
 globs:
   - "**/Domain.Data/**/*.cs"
+  - "**/*.Domain.Data/**/*.cs"
   - "**/Configuration/**/*.cs"
 alwaysApply: false
 ---
 
 # EF configuration
 
-Map backing fields, owned types, and FKs in `IEntityTypeConfiguration<T>` under `Domain.Data/Configuration`. Reuse the naming convention configured on the context.
+Map backing fields, owned types, and FKs in `IEntityTypeConfiguration<T>` under `Domain.Data/Configuration`. Derive table names from the `DbSet` name and the context's naming convention. Do not call `ToTable(...)` in handwritten EF mappings. When changing an existing mapping, check the migration snapshot for an unintended table rename.
 
 Keys, indexes, ignores, and jsonb conversions. Do not set `HasMaxLength` or `HasColumnType` on strings. Do not set `HasColumnName`.
 

@@ -15,6 +15,7 @@ description: Применяй при разработке и ревью C#-бэ�
 
 - Для C# ориентируйся на [правила читаемости](rules/dotnet/csharp/simplicity.mdc) и [обработки ошибок](rules/dotnet/errors).
 - В Domain выбери [предметный каталог и имя типа](rules/dotnet/csharp/split-by-context.mdc), затем проверь [трёхстрочный XML-комментарий](rules/dotnet/domain/summaries.mdc), [базовый тип каждого класса](rules/dotnet/domain/entity-or-vo.mdc) и [пример перечисления с явными значениями](rules/dotnet/domain/enums.mdc).
+- Для EF-маппинга в Domain.Data прочитай [правила конфигурации EF Core](rules/dotnet/domain/ef-config.mdc).
 - В Application сверяйся с [формой команды или запроса](rules/dotnet/microservice/application-mediatr.mdc), [порядком действий в обработчике](rules/dotnet/microservice/handler-returns.mdc) и [границей маппинга](rules/dotnet/microservice/mapper.mdc). Для внешней точки входа выбери [gRPC-адаптер](rules/dotnet/microservice/api-adapter.mdc) или [GraphQL-шлюз](rules/dotnet/gateway) по стеку проекта.
 - Для Protobuf и событий открой [контракты](rules/dotnet/contracts), для запуска и конфигурации сервиса — [bootstrap](rules/dotnet/bootstrap).
 - Для тестов сервиса применяй [правило E2E-покрытия по БТ](rules/dotnet/microservice/e2e-tests.mdc). Библиотеки `common` следуют собственным соглашениям о тестировании.
