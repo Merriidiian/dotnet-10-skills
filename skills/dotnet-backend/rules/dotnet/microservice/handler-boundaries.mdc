@@ -1,0 +1,27 @@
+---
+description: Keep command dispatch at application entry points and prohibit nested commands in handlers
+globs:
+  - "**/Application/**/*.cs"
+  - "**/*.Application/**/*.cs"
+alwaysApply: false
+---
+
+# Handler boundaries
+
+- Every application handler is prohibited from invoking another command, directly or indirectly. This includes dispatch through Mediator, direct calls to another handler, and dispatch through an intermediate component.
+- Reuse domain methods and focused application components within the operation. Stage its changes and Outbox entries in the same DbContext and save once.
+- Dispatch commands from entry points such as gRPC adapters and Inbox consumers. For an asynchronous follow-up, publish an integration event through the Outbox and handle it through the Inbox.
+
+The project supplies the tracked document and an Outbox writer backed by the handler's DbContext. This operation persists the approval and the event together and returns the document ID.
+
+```csharp
+public async ValueTask<ApproveDocumentResponse> Handle(ApproveDocument command, CancellationToken cancellationToken)
+{
+    var document = await context.Documents.SingleAsync(item => item.Id == command.Id, cancellationToken);
+    document.Approve();
+    await events.EnqueueApproved(document.Id, cancellationToken);
+
+    await context.SaveChangesAsync(cancellationToken);
+    return new ApproveDocumentResponse { Id = document.Id.ToString() };
+}
+```
