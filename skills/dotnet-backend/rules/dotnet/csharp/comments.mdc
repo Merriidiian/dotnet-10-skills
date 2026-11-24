@@ -7,5 +7,5 @@ alwaysApply: false
 # Comments
 
 Write comments and XML documentation in Russian. Use English identifiers.
-Apply the three-line XML summary rule in the Domain layer (see `domain/summaries.mdc`). In Application, Api, Domain.Data and other layers, document a member when it needs an explanation.
+Write every XML summary on three lines. Put the opening tag, one short description, and the closing tag on separate lines. In Domain, follow the coverage in `domain/summaries.mdc`. In other layers, document a member when it needs an explanation.
 Use implementation comments to explain an ordering constraint, an invariant or a surprising case.

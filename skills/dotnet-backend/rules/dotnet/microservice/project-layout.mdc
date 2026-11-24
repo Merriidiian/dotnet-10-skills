@@ -17,3 +17,5 @@ Use the SDK version agreed for the workspace in each applicable `global.json`. W
 gRPC adapter → mediator → handler → EF/domain. No REST. No Hangfire. No `Infrastructure` — persistence is `Domain.Data`.
 
 Domain must not reference EF, ASP.NET, or Application.
+
+Keep EF Core migrations and the design-time DbContext factory in Domain.Data. Apply migrations using the API host’s `--migrate` mode or the EF CLI. Reuse the host’s migration entry point for a dedicated deployment job.

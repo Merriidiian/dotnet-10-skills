@@ -8,7 +8,7 @@ alwaysApply: false
 
 # Handler boundaries
 
-- Every application handler is prohibited from invoking another command, directly or indirectly. This includes dispatch through Mediator, direct calls to another handler, and dispatch through an intermediate component.
+- Command and query handlers must never inject, resolve, or use Mediator dispatch interfaces, including `IMediator` and `ISender`. They must never invoke another command or query through direct handler calls or an intermediate component.
 - Reuse domain methods and focused application components within the operation. Stage its changes and Outbox entries in the same DbContext and save once.
 - Dispatch commands from entry points such as gRPC adapters and Inbox consumers. For an asynchronous follow-up, publish an integration event through the Outbox and handle it through the Inbox.
 
